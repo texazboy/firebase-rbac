@@ -1,0 +1,97 @@
+{
+  "rules": {
+    "users": {
+      ".read": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'",
+      ".indexOn": ["role", "email"],
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid || root.child('users').child(auth.uid).child('role').val() === 'admin'",
+        ".validate": "newData.hasChildren(['name', 'email', 'role', 'createdAt'])",
+        "name": {
+          ".validate": "newData.isString() && newData.val().length >= 2 && newData.val().length <= 100"
+        },
+        "email": {
+          ".validate": "newData.isString() && newData.val().contains('@') && newData.val().contains('.')"
+        },
+        "role": {
+          ".validate": "(newData.val() === 'admin' || newData.val() === 'user') && (root.child('users').child(auth.uid).child('role').val() === 'admin' || newData.val() === 'user' || !root.child('users').child(auth.uid).exists())"
+        },
+        "createdAt": {
+          ".validate": "newData.isString()"
+        },
+        "lastLogin": {
+          ".validate": "newData.isString()"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    },
+    "admin-data": {
+      ".read": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'",
+      ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'",
+      "reports": {
+        ".indexOn": ["priority", "createdAt"],
+        "$reportId": {
+          ".validate": "newData.hasChildren(['title', 'content', 'createdBy', 'createdAt'])",
+          "title": { ".validate": "newData.isString() && newData.val().length >= 1 && newData.val().length <= 200" },
+          "content": { ".validate": "newData.isString()" },
+          "createdBy": { ".validate": "newData.isString() && newData.val() === auth.uid" },
+          "createdAt": { ".validate": "newData.isString()" },
+          "priority": { ".validate": "newData.val() === 'alta' || newData.val() === 'media' || newData.val() === 'baixa'" }
+        }
+      },
+      "system-logs": {
+        ".indexOn": ["timestamp", "action"],
+        "$logId": {
+          ".validate": "newData.hasChildren(['action', 'performedBy', 'timestamp'])",
+          "action": { ".validate": "newData.isString()" },
+          "performedBy": { ".validate": "newData.isString()" },
+          "timestamp": { ".validate": "newData.isString()" },
+          "details": { ".validate": "newData.isString()" },
+          "targetUser": { ".validate": "newData.isString()" }
+        }
+      },
+      "settings": {
+        ".validate": "newData.hasChildren(['maintenanceMode', 'appVersion'])",
+        "maintenanceMode": { ".validate": "newData.isBoolean()" },
+        "maxUsersAllowed": { ".validate": "newData.isNumber() && newData.val() > 0" },
+        "appVersion": { ".validate": "newData.isString()" }
+      }
+    },
+    "public-data": {
+      ".read": "auth != null",
+      ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'",
+      "announcements": {
+        ".indexOn": ["createdAt", "active"],
+        "$announcementId": {
+          ".validate": "newData.hasChildren(['title', 'content', 'createdBy', 'createdAt'])",
+          "title": { ".validate": "newData.isString() && newData.val().length >= 1" },
+          "content": { ".validate": "newData.isString()" },
+          "createdBy": { ".validate": "newData.isString()" },
+          "createdAt": { ".validate": "newData.isString()" },
+          "active": { ".validate": "newData.isBoolean()" }
+        }
+      }
+    },
+    "user-data": {
+      "$uid": {
+        ".read": "$uid === auth.uid || root.child('users').child(auth.uid).child('role').val() === 'admin'",
+        ".write": "$uid === auth.uid",
+        "notes": {
+          ".indexOn": ["createdAt"],
+          "$noteId": {
+            ".validate": "newData.hasChildren(['title', 'content', 'createdAt'])",
+            "title": { ".validate": "newData.isString() && newData.val().length >= 1 && newData.val().length <= 200" },
+            "content": { ".validate": "newData.isString()" },
+            "createdAt": { ".validate": "newData.isString()" }
+          }
+        },
+        "preferences": {
+          "theme": { ".validate": "newData.val() === 'light' || newData.val() === 'dark'" },
+          "notifications": { ".validate": "newData.isBoolean()" }
+        }
+      }
+    }
+  }
+}
