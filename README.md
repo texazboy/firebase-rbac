@@ -276,4 +276,4 @@ firebase-rbac-project/
 
 ## 👨‍💻 Autor
 
-Projeto desenvolvido por José Gabriel Dãmaso e Pedro Augusto como trabalho acadêmico demonstrando controle de acesso baseado em cargos (RBAC) com Firebase.
+Projeto desenvolvido por José Gabriel Dâmaso e Pedro Augusto como trabalho acadêmico demonstrando controle de acesso baseado em cargos (RBAC) com Firebase.
