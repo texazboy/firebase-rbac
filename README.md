@@ -202,40 +202,21 @@ A interface adapta-se completamente ao cargo do usuário logado:
 ### Pré-requisitos
 - Conta no [Firebase Console](https://console.firebase.google.com)
 
-### Passo 1 — Criar projeto Firebase
-1. Acesse o Firebase Console e crie um novo projeto
+### Passo 1 — Configurar o Firebase Console
+1. Acesse o Firebase Console e crie um novo projeto (ou use um existente)
 2. Ative **Authentication** → método **Email/Senha**
 3. Ative **Realtime Database** → inicie em **modo de teste**
 
-### Passo 2 — Copiar credenciais
-1. Em **Configurações do Projeto** → **Seus apps** → adicione um app Web
-2. Copie o objeto `firebaseConfig`
-
-### Passo 3 — Configurar o projeto
-1. Abra `index.html` e substitua o bloco `firebaseConfig` no final do arquivo:
-
-```javascript
-const firebaseConfig = {
-  apiKey:            "SUA_API_KEY_AQUI",
-  authDomain:        "seu-projeto.firebaseapp.com",
-  databaseURL:       "https://seu-projeto-default-rtdb.firebaseio.com",
-  projectId:         "seu-projeto",
-  storageBucket:     "seu-projeto.appspot.com",
-  messagingSenderId: "123456789",
-  appId:             "1:123456789:web:abcdef"
-};
-```
-
-### Passo 4 — Aplicar Security Rules
+### Passo 2 — Aplicar Security Rules
 1. No Firebase Console → **Realtime Database** → aba **Regras**
-2. Cole o conteúdo de `database.rules.json`
+2. Cole o conteúdo de `database.rules.clean.json`
 3. Clique **Publicar**
 
-### Passo 5 — Executar
-- Abra `index.html` diretamente no navegador, **ou**
-- Use um servidor local: `npx serve .` ou `python3 -m http.server 8000`
+### Passo 3 — Executar
+- Abra `index.html` diretamente no navegador
+- As credenciais do Firebase já estão configuradas no código
 
-### Passo 6 — Testar
+### Passo 4 — Testar
 1. **Crie uma conta Admin** (selecione cargo Admin)
 2. Navegue pelo dashboard, veja todos os dados
 3. Faça logout
