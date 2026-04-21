@@ -4,6 +4,12 @@ Sistema web completo que demonstra **Role-Based Access Control (RBAC)** utilizan
 
 ---
 
+## 🎥 Demonstração
+
+[▶️ Assistir ao vídeo](https://youtu.be/b7ItOsOLrmY?si=ZBwQcSNTO2oeRoUd)
+
+---
+
 ## 📐 Estrutura do Banco de Dados
 
 O banco utiliza 4 nós raiz, cada um com regras de acesso distintas:
